@@ -77,6 +77,10 @@ class QQMusic:
 			else:
 				print(self.fullfilename)
 				data=requests.get(url).content
+				if data==b'':
+					print('Error: Failed to download the file')
+					self.status=-5
+					return
 				with open('music/%s' % self.fullfilename, 'wb') as file:
 					file.write(data)
 				print('Done')
@@ -145,7 +149,7 @@ if __name__ == '__main__':
 								break
 							else:
 								print('Error: Input not in (y/n)')
-						if Music.status == 0:
+						if Music.status == 0 and choice == 'y':
 							while True:
 								choice=input('Send the lyric file to the MagicMirror?(y/n)')
 								if choice == 'y':
